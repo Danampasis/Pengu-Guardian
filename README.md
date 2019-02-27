@@ -24,4 +24,6 @@ Pengu Guardian is a 2D platformer game created using pygame
 - V = melee attack (coming soon)
 - G = grenade (coming soon)
 
+*Controller*
+
 _If you are using an OEM controller please run the **joysticktest.py** first to determine the buttons of your joystick, then change them accordinly on the constants.py file._

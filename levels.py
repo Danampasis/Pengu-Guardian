@@ -143,7 +143,7 @@ class Level_01(Level):
 
         # items_list = [ [items.WORM,300,300]]
 
-        enemies = [ [enemylast.WORM,550,437,500,640,3],
+        enemies = [ [enemylast.WORM,550,437,500,640,2],
                     [enemylast.WORM, 1400, 535, 1250, 1800, 3],
                     [enemylast.WORM, 1900, 535, 1850, 2000, 3],
                     [enemylast.WORM, 2500, 535, 2400, 2700, 3],

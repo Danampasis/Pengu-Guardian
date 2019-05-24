@@ -17,7 +17,7 @@ import constants
 WORM            = (0,0,128,128)
 class Enemy(pygame.sprite.Sprite):
     """ Platform the user can jump on """
-
+    frames = []
     def __init__(self, sprite_sheet_data):
         """ Platform constructor. Assumes constructed with user passing in
             an array of 5 numbers like what's defined at the top of this
@@ -26,14 +26,21 @@ class Enemy(pygame.sprite.Sprite):
 
         sprite_sheet = SpriteSheet("worm_spritesheet.png")
         # Grab the image for this platform
-        self.image = sprite_sheet.get_image(sprite_sheet_data[0],
-                                            sprite_sheet_data[1],
-                                            sprite_sheet_data[2],
-                                            sprite_sheet_data[3])
+        frame_1 = sprite_sheet.get_image(0,0,128,128)
+        self.frames.append(frame_1)
+        frame_2 = sprite_sheet.get_image(128, 0, 128, 128)
+        self.frames.append(frame_2)
 
-        self.image = pygame.transform.scale(self.image,(64,64))
+        # self.image = pygame.transform.scale(self.image,(64,64))
 
+        self.image = self.frames[0]
+
+        # Set a reference to the image rect.
         self.rect = self.image.get_rect()
+
+        self.index = 0
+
+        self.counter = 0
 
 
 class MovingEnemy(Enemy):
@@ -60,6 +67,17 @@ class MovingEnemy(Enemy):
 
         # Move left/right
         self.rect.x += self.change_x
+
+        pos = self.rect.x + self.level.world_shift
+
+        self.counter += 1           # COUNTER FOR ENEMY SPRITE ANIMATIONn
+        if self.counter == 30:
+            self.counter = 0
+            self.index += 1
+        if self.index >= len(self.frames):
+            self.index = 0
+        self.image = self.frames[self.index]
+        self.image = pygame.transform.scale(self.image,(64,64))
 
         # See if we hit the player
         hit = pygame.sprite.collide_rect(self, self.player)

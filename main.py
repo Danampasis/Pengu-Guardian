@@ -249,9 +249,8 @@ def game():
                 screens.current_level += 1
                 current_level = level_list[current_level_no]
                 player.level = current_level
-                # if current_level.music_on:
-                #     pygame.mixer.music.load(current_level.music)
-                #     pygame.mixer.music.play(-1)
+                pygame.mixer.music.load(current_level.music)
+                pygame.mixer.music.play(-1)
             if current_level_no == len(level_list)-1:
                 screens.ending()
 

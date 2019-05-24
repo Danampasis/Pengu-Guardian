@@ -71,7 +71,7 @@ class MovingEnemy(Enemy):
         pos = self.rect.x + self.level.world_shift
 
         self.counter += 1           # COUNTER FOR ENEMY SPRITE ANIMATIONn
-        if self.counter == 30:
+        if self.counter == 29:
             self.counter = 0
             self.index += 1
         if self.index >= len(self.frames):

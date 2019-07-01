@@ -68,7 +68,7 @@ def main_menu():
 
 
 
-        backGround = background.Background('bg.png', [0, 0])
+        backGround = background.Background('img/bg.png', [0, 0])
         screen.blit(backGround.image, backGround.rect)
         largeText = pygame.font.Font('Wonder_Boy_In_Monster_World.ttf', 60)
         TextSurf, TextRect = text_objects("Pengu Guardian", largeText)
@@ -77,14 +77,14 @@ def main_menu():
 
         # Display Character Icon in the menu
 
-        img = pygame.image.load('menu character.png')
+        img = pygame.image.load('img/menu character.png')
         img = pygame.transform.scale(img, (150 , 150))
         screen.blit(img, (80, 235))
 
 
         # Display Penguin Icon in the menu
 
-        img = pygame.image.load('pengu1.png')
+        img = pygame.image.load('img/pengu1.png')
         img = pygame.transform.scale(img, (120, 120))
         screen.blit(img, (625, 270))
 
@@ -164,7 +164,7 @@ def ending():
         # button("GO!", 300, 200, 200, 50, GREEN, bright_green, quit())
 
 
-        backGround = background.Background('bg.png', [0, 0])
+        backGround = background.Background('img/bg.png', [0, 0])
         screen.blit(backGround.image, backGround.rect)
         largeText = pygame.font.Font('Wonder_Boy_In_Monster_World.ttf', 40)
         TextSurf, TextRect = text_objects("Thanks for playing", largeText)
@@ -173,14 +173,14 @@ def ending():
 
         # Display Character Icon in the menu
 
-        img = pygame.image.load('boy_pixel_walk_green.png')
+        img = pygame.image.load('img/boy_pixel_walk_green.png')
         img = pygame.transform.scale(img, (128, 128))
         screen.blit(img, (92, 250))
 
 
         # Display Penguin Icon in the menu
 
-        img = pygame.image.load('penguin.png')
+        img = pygame.image.load('img/penguin.png')
         img = pygame.transform.scale(img, (80, 80))
         screen.blit(img, (625, 300))
 
@@ -214,7 +214,7 @@ def customisation():
     global intro
 
     while customise:
-        backGround = background.Background('bg.png', [0, 0])
+        backGround = background.Background('img/bg.png', [0, 0])
         screen.blit(backGround.image, backGround.rect)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -232,7 +232,7 @@ def customisation():
                 if event.key == pygame.K_b:
                     player_color = "red"
                 if event.key == pygame.K_r:
-                    img_pengu = pygame.image.load('penguin.png')
+                    img_pengu = pygame.image.load('img/penguin.png')
                     img_pengu = pygame.transform.scale(img_pengu, (80, 80))
                     screen.blit(img_pengu, (625, 300))
                     pygame.display.flip()
@@ -244,7 +244,7 @@ def customisation():
         # button("GO!", 300, 200, 200, 50, GREEN, bright_green, quit())
 
 
-        backGround = background.Background('bg.png', [0, 0])
+        backGround = background.Background('img/bg.png', [0, 0])
         screen.blit(backGround.image, backGround.rect)
         largeText = pygame.font.Font('Wonder_Boy_In_Monster_World.ttf', 40)
         TextSurf, TextRect = text_objects("Customisation", largeText)
@@ -253,7 +253,7 @@ def customisation():
 
         # Display Character Icon in the menu
 
-        img = pygame.image.load('boy_pixel_walk_green.png')
+        img = pygame.image.load('img/boy_pixel_walk_green.png')
         img = pygame.transform.scale(img, (128, 128))
         screen.blit(img, (92, 250))
 
@@ -345,7 +345,7 @@ def death():
                 pygame.quit()
                 quit()
 
-        backGround = background.Background('bg.png', [0, 0])
+        backGround = background.Background('img/bg.png', [0, 0])
         screen.blit(backGround.image, backGround.rect)
         largeText = pygame.font.Font('Wonder_Boy_In_Monster_World.ttf', 60)
         TextSurf, TextRect = text_objects("YOU DIED!!", largeText)
@@ -374,7 +374,7 @@ def help():
 
     while help:
         for event in pygame.event.get():
-            backGround = background.Background('bg.png', [0, 0])
+            backGround = background.Background('img/bg.png', [0, 0])
             screen.blit(backGround.image, backGround.rect)
             if event.type == pygame.QUIT:
                 pygame.quit()
@@ -444,7 +444,7 @@ def help():
 
         # Display Character Icon in the menu
 
-        img = pygame.image.load('controller.png')
+        img = pygame.image.load('img/controller.png')
         img = pygame.transform.scale(img, (300, 300))
         screen.blit(img, (250,100))
 

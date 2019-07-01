@@ -449,7 +449,7 @@ def help():
         screen.blit(img, (250,100))
 
         # Quit
-        # pygame.draw.rect(screen, RED, (300, 425, 200, 50))
+        # pygame.draw.rect(screen, RED, (300, 425, 200, 50)) #draws red rect
         textSurf, textRect = text_objects("Press select button to go back!", smallText)
         textRect.center = ((300 + (200 / 2)), (425 + (50 / 2)))
         screen.blit(textSurf, textRect)

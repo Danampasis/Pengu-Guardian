@@ -39,7 +39,7 @@ pain_sound = pygame.mixer.Sound(random.choice(pains))
 
 
 # Music on or off
-music = True
+music = False
 
 #Character selection
 character_color = 'Blue' # TODO character color customisation

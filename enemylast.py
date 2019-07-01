@@ -34,16 +34,16 @@ class Enemy(pygame.sprite.Sprite):
         self.frames_r.append(frame_2)
 
         frame_3 = sprite_sheet.get_image(0,0,128,128)
-        pygame.transform.flip(frame_3, True, False)
+        frame_3 = pygame.transform.flip(frame_3, True, False)
         self.frames_l.append(frame_3)
         frame_4 = sprite_sheet.get_image(128, 0, 128, 128)
-        pygame.transform.flip(frame_4, True, False)
+        frame_4 = pygame.transform.flip(frame_4, True, False)
         self.frames_l.append(frame_4)
 
 
         # self.image = pygame.transform.scale(self.image,(64,64))
 
-        self.image = self.frames_r[0]
+        self.image = self.frames_l[0]
 
         # Set a reference to the image rect.
         self.rect = self.image.get_rect()
@@ -57,6 +57,7 @@ class MovingEnemy(Enemy):
     """ This is a fancier platform that can actually move. """
     change_x = 0
     change_y = 0
+    direction = "Right"
 
     boundary_top = 0
     boundary_bottom = 0
@@ -84,16 +85,18 @@ class MovingEnemy(Enemy):
         if self.counter == 29:
             self.counter = 0
             self.index += 1
-        if self.index >= len(self.frames_r):
+        if self.index >= len(self.frames_l) or self.index >= len(self.frames_r):
             self.index = 0
-        if self.change_x == -3:
-            self.image = self.frames_r[self.index]
-        else:
+        cur_pos = self.rect.x - self.level.world_shift
+        # if cur_pos < self.boundary_left:
+        if self.direction == "Right":
             self.image = self.frames_l[self.index]
+        if self.direction == "Left":
+            self.image = self.frames_r[self.index]
         self.image = pygame.transform.scale(self.image,(64,64))
 
-        if self.change_x == -3:
-            pygame.transform.flip(self.image, True, False)
+        # if self.change_x == -3:
+        #     pygame.transform.flip(self.image, True, False)
         # See if we hit the player
         hit = pygame.sprite.collide_rect(self, self.player)
         if hit:
@@ -143,9 +146,15 @@ class MovingEnemy(Enemy):
 
         # Check the boundaries and see if we need to reverse
         # direction.
-        if self.rect.bottom > self.boundary_bottom or self.rect.top < self.boundary_top:
-            self.change_y *= -1
+        # if self.rect.bottom > self.boundary_bottom or self.rect.top < self.boundary_top:
+        #     self.change_y *= -1
+        #     pygame.transform.flip(self.image, True, False)
 
         cur_pos = self.rect.x - self.level.world_shift
+        if cur_pos < self.boundary_left:
+            self.direction = "Right"
+        if cur_pos > self.boundary_right:
+            self.direction = "Left"
         if cur_pos < self.boundary_left or cur_pos > self.boundary_right:
             self.change_x *= -1
+            self.image = pygame.transform.flip(self.image, True, False)

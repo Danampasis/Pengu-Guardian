@@ -16,6 +16,12 @@ Pengu Guardian is a 2D platformer game created using pygame
 
 ![Alt text](img/state.png "current state")
 
+**Promotional Video**
+
+Click the image below to watch:
+
+[![IMAGE ALT TEXT HERE](http://img.youtube.com/vi/20UOzeAtLkI/0.jpg)](http://www.youtube.com/watch?v=20UOzeAtLkI)
+
 **Controls:**
 
 *Keyboard*

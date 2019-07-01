@@ -26,4 +26,4 @@ Pengu Guardian is a 2D platformer game created using pygame
 
 *Controller*
 
-_If you are using an OEM controller please run the **joysticktest.py** first to determine the buttons of your joystick, then change them accordinly on the constants.py file._
+_If you are using an OEM controller please run the **joysticktest.py** first to determine the buttons of your joystick, then change them accordingly on the constants.py file._

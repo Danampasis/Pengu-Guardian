@@ -12,7 +12,7 @@ class Bullet(pygame.sprite.Sprite):
 
         # self.image = pygame.Surface([4, 10])
         # self.image.fill(BLACK)
-        self.image = pygame.image.load('Bullet_12x3.png')
+        self.image = pygame.image.load('img/Bullet_12x3.png')
 
         self.rect = self.image.get_rect()
 

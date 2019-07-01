@@ -5,6 +5,7 @@ import pygame
 
 from spritesheet_functions import SpriteSheet
 import constants
+# from levels import mobs
 # import bullet
 
 # These constants define our platform types:
@@ -17,23 +18,32 @@ import constants
 WORM            = (0,0,128,128)
 class Enemy(pygame.sprite.Sprite):
     """ Platform the user can jump on """
-    frames = []
+    frames_r = []
+    frames_l = []
     def __init__(self, sprite_sheet_data):
         """ Platform constructor. Assumes constructed with user passing in
             an array of 5 numbers like what's defined at the top of this
             code. """
         pygame.sprite.Sprite.__init__(self)
 
-        sprite_sheet = SpriteSheet("worm_spritesheet.png")
+        sprite_sheet = SpriteSheet("img/worm_spritesheet.png")
         # Grab the image for this platform
         frame_1 = sprite_sheet.get_image(0,0,128,128)
-        self.frames.append(frame_1)
+        self.frames_r.append(frame_1)
         frame_2 = sprite_sheet.get_image(128, 0, 128, 128)
-        self.frames.append(frame_2)
+        self.frames_r.append(frame_2)
+
+        frame_3 = sprite_sheet.get_image(0,0,128,128)
+        pygame.transform.flip(frame_3, True, False)
+        self.frames_l.append(frame_3)
+        frame_4 = sprite_sheet.get_image(128, 0, 128, 128)
+        pygame.transform.flip(frame_4, True, False)
+        self.frames_l.append(frame_4)
+
 
         # self.image = pygame.transform.scale(self.image,(64,64))
 
-        self.image = self.frames[0]
+        self.image = self.frames_r[0]
 
         # Set a reference to the image rect.
         self.rect = self.image.get_rect()
@@ -56,6 +66,7 @@ class MovingEnemy(Enemy):
 
     level = None
     player = None
+    # max_pos_left = enemies[0][2]
 
     def update(self):
         """ Move the platform.
@@ -64,21 +75,25 @@ class MovingEnemy(Enemy):
             platform shoves a player into another object. Make sure
             moving platforms have clearance to push the player around
             or add code to handle what happens if they don't. """
-
         # Move left/right
         self.rect.x += self.change_x
 
         pos = self.rect.x + self.level.world_shift
 
-        self.counter += 1           # COUNTER FOR ENEMY SPRITE ANIMATIONn
+        self.counter += 1           # COUNTER FOR ENEMY SPRITE ANIMATION
         if self.counter == 29:
             self.counter = 0
             self.index += 1
-        if self.index >= len(self.frames):
+        if self.index >= len(self.frames_r):
             self.index = 0
-        self.image = self.frames[self.index]
+        if self.change_x == -3:
+            self.image = self.frames_r[self.index]
+        else:
+            self.image = self.frames_l[self.index]
         self.image = pygame.transform.scale(self.image,(64,64))
 
+        if self.change_x == -3:
+            pygame.transform.flip(self.image, True, False)
         # See if we hit the player
         hit = pygame.sprite.collide_rect(self, self.player)
         if hit:

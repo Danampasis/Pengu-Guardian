@@ -24,14 +24,14 @@ SCREEN_HEIGHT = 600
 
 # Sounds
 effects = True
-pains = ["pain1.wav","pain2.wav","pain3.wav","pain4.wav","pain5.wav","pain6.wav","painh.wav","paino.wav"]
-jump_sound = pygame.mixer.Sound('jump.wav')
-bad_sound = pygame.mixer.Sound('lose sound 2 - 1_0.ogg')
-out_of_bullets = pygame.mixer.Sound('no ammo.wav')
-click_sound = pygame.mixer.Sound('Shotgun.wav')
-reload_sound = pygame.mixer.Sound('reload shotgun.wav')
-death_sound = pygame.mixer.Sound('die1.wav')
-heart_beat = pygame.mixer.Sound('heart beat.ogg')
+pains = ["sfx/pain1.wav","sfx/pain2.wav","sfx/pain3.wav","sfx/pain4.wav","sfx/pain5.wav","sfx/pain6.wav","sfx/painh.wav","sfx/paino.wav"]
+jump_sound = pygame.mixer.Sound('sfx/jump.wav')
+bad_sound = pygame.mixer.Sound('sfx/lose sound 2 - 1_0.ogg')
+out_of_bullets = pygame.mixer.Sound('sfx/no ammo.wav')
+click_sound = pygame.mixer.Sound('sfx/Shotgun.wav')
+reload_sound = pygame.mixer.Sound('sfx/reload shotgun.wav')
+death_sound = pygame.mixer.Sound('sfx/die1.wav')
+heart_beat = pygame.mixer.Sound('sfx/heart beat.ogg')
 # score_up = pygame.mixer.Sound('Picked Coin Echo 2.wav')
 # select_sound = pygame.mixer.Sound('Menu Selection Click.wav')
 pain_sound = pygame.mixer.Sound(random.choice(pains))
@@ -45,13 +45,13 @@ music = True
 character_color = 'Blue' # TODO character color customisation
 character = ""
 if character_color == 'White':
-    character = 'white_character.png'
+    character = 'img/white_character.png'
 elif character_color == 'Green':
-    character = 'green_character.png'
+    character = 'img/green_character.png'
 elif character_color == 'Red':
-    character = 'red_character.png'
+    character = 'img/red_character.png'
 elif character_color == 'Blue':
-    character = 'blue_character.png'
+    character = 'img/blue_character.png'
 
 health = 900
 

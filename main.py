@@ -30,7 +30,7 @@ def game():
     pygame.mixer.init()
     pygame.mouse.set_visible(False)
 
-    try:
+    try:   # check if there is a joystick connected
         j = pygame.joystick.Joystick(0)  # create a joystick instance
         j.init()  # init instance
         print("Enabled joystick: {0}".format(j.get_name()))
@@ -42,7 +42,7 @@ def game():
     screen = pygame.display.set_mode(size)
 
     pygame.display.set_caption("Pengu Guardian")
-    a = pygame.image.load('character_blue.png')
+    a = pygame.image.load('img/character_blue.png')
     pygame.display.set_icon(a)
 
     # Create the player
@@ -52,7 +52,7 @@ def game():
 
     # Create all the levels
     level_list = []
-    # level_list.append(levels.Level_TEST(player))
+    # level_list.append(levels.Level_TEST(player))    #TODO Implement better level creation method(json/csv)
     level_list.append(levels.Level_01(player))
     level_list.append(levels.Level_02(player))
     level_list.append(levels.Level_03(player))
@@ -271,29 +271,29 @@ def game():
         if constants.health == 0:
             screens.death()
         if constants.health >= 900:
-            img = pygame.image.load('full health.png')
+            img = pygame.image.load('img/full health.png')
         if constants.health < 600:
-            img = pygame.image.load('middle health.png')
+            img = pygame.image.load('img/middle health.png')
         if constants.health < 300:
             # pygame.mixer.music.stop()
             # constants.heart_beat.play(-1)  # TODO heartbeat sound when health is low
-            img = pygame.image.load('low health.png')
+            img = pygame.image.load('img/low health.png')
 
         # SHOTGUN SHELL IMAGE
         if len(ammo_list) == 0:
-            bullets = pygame.image.load('full ammo.png')
+            bullets = pygame.image.load('img/full ammo.png')
         if len(ammo_list) == 1:
-            bullets = pygame.image.load('5 ammo.png')
+            bullets = pygame.image.load('img/5 ammo.png')
         if len(ammo_list) == 2:
-            bullets = pygame.image.load('4 ammo.png')
+            bullets = pygame.image.load('img/4 ammo.png')
         if len(ammo_list) == 3:
-            bullets = pygame.image.load('3 ammo.png')
+            bullets = pygame.image.load('img/3 ammo.png')
         if len(ammo_list) == 4:
-            bullets = pygame.image.load('2 ammo.png')
+            bullets = pygame.image.load('img/2 ammo.png')
         if len(ammo_list) == 5:
-            bullets = pygame.image.load('1 ammo.png')
+            bullets = pygame.image.load('img/1 ammo.png')
         if len(ammo_list) == 6:
-            bullets = pygame.image.load('reload.png')
+            bullets = pygame.image.load('img/reload.png')
 
         if magazine_limit > 0:
             if len(ammo_list) == 6:
@@ -303,7 +303,7 @@ def game():
         if magazine_limit == 0:
             text = ''
             if len(ammo_list) == 6:
-                bullets = pygame.image.load('out of ammo.png')
+                bullets = pygame.image.load('img/out of ammo.png')
         for bullet in bullet_list:
             # See if it hit a block
             block_hit_list = pygame.sprite.spritecollide(bullet, levels.Level.enemy_list, True)

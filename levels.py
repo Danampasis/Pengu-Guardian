@@ -5,7 +5,6 @@ import platforms
 import enemylast
 import items
 import screens
-import enemies
 
 
 class Level():
@@ -89,14 +88,14 @@ class Level_01(Level):
         # Call the parent constructor
         Level.__init__(self, player)
 
-        self.background = pygame.image.load("level_test_bg.png").convert_alpha()  # TODO optimise background loading
+        self.background = pygame.image.load("img/level_test_bg.png").convert_alpha()  # TODO optimise background loading
         # self.background = pygame.transform.scale(self.background, (4200,constants.SCREEN_HEIGHT)) # TODO scale background images to adaptable screen size from settings
         # self.background.set_colorkey(constants.WHITE)
         self.level_limit_right = 12000
         self.level_limit_left = 0
         self.weapons = True
         self.music_on = constants.music
-        self.music = 'Grasslands Theme.mp3'
+        self.music = 'sfx/Grasslands Theme.mp3'
 
         # Array with type of platform, and x, y location of the platform.
         level = [ [platforms.GRASS_LEFT, 500, 500],
@@ -143,7 +142,7 @@ class Level_01(Level):
 
         # items_list = [ [items.WORM,300,300]]
 
-        enemies = [ [enemylast.WORM,550,437,500,640,2],
+        mobs = [ [enemylast.WORM, 550, 437, 500, 640, 2],
                     [enemylast.WORM, 1400, 535, 1250, 1800, 3],
                     [enemylast.WORM, 1900, 535, 1850, 2000, 3],
                     [enemylast.WORM, 2500, 535, 2400, 2700, 3],
@@ -167,7 +166,7 @@ class Level_01(Level):
             block.player = self.player
             self.platform_list.add(block)
 
-        for enemy in enemies:
+        for enemy in mobs:
             block = enemylast.MovingEnemy(enemy[0])
             block.rect.x = enemy[1]
             block.rect.y = enemy[2]
@@ -221,12 +220,12 @@ class Level_02(Level):
         # Call the parent constructor
         Level.__init__(self, player)
 
-        self.background = pygame.image.load("background_02.png").convert()
+        self.background = pygame.image.load("img/background_02.png").convert()
         self.background.set_colorkey(constants.WHITE)
         self.level_limit_right = 4000
         self.level_limit_left = 0
         self.weapons = True
-        self.music = 'Overhead Map - Village.mp3'
+        self.music = 'sfx/Overhead Map - Village.mp3'
 
         # Array with type of platform, and x, y location of the platform.
         level = [ [platforms.STONE_PLATFORM_LEFT, 500, 550],
@@ -272,12 +271,12 @@ class Level_03(Level):
         # Call the parent constructor
         Level.__init__(self, player)
 
-        self.background = pygame.image.load("background_03.png").convert()
+        self.background = pygame.image.load("img/background_03.png").convert()
         self.background.set_colorkey(constants.WHITE)
         self.level_limit_right = 3000
         self.level_limit_left = 0
         self.weapons = False
-        self.music = 'Grasslands Theme.mp3'
+        self.music = 'sfx/Grasslands Theme.mp3'
 
         # Array with type of platform, and x, y location of the platform.
         level = [ [platforms.GRASS_LEFT, 500, 500],
@@ -327,12 +326,12 @@ class Level_04(Level):
         # Call the parent constructor
         Level.__init__(self, player)
 
-        self.background = pygame.image.load("level4_bg.png").convert()
+        self.background = pygame.image.load("img/level4_bg.png").convert()
         self.background.set_colorkey(constants.WHITE)
         self.level_limit_right = 3600
         self.level_limit_left = 0
         self.weapons = False
-        self.music = 'Credits_edit.ogg'
+        self.music = 'sfx/Credits_edit.ogg'
 
 class Level_TEST(Level):
     """ Definition for level TEST. """
@@ -342,13 +341,13 @@ class Level_TEST(Level):
         # Call the parent constructor
         Level.__init__(self, player)
 
-        self.background = pygame.image.load("background_03.png").convert()
+        self.background = pygame.image.load("img/background_03.png").convert()
         self.background.set_colorkey(constants.WHITE)
         self.level_limit_right = 20000
         self.level_limit_left = 0
         self.weapons = True
         self.music_on = False
-        self.music = 'Credits_edit.ogg'
+        self.music = 'sfx/Credits_edit.ogg'
 
         # Array with type of platform, and x, y location of the platform.
         level = [ [platforms.GRASS_LEFT, 500, 500],

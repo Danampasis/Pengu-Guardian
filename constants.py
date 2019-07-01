@@ -35,6 +35,7 @@ heart_beat = pygame.mixer.Sound('sfx/heart beat.ogg')
 # score_up = pygame.mixer.Sound('Picked Coin Echo 2.wav')
 # select_sound = pygame.mixer.Sound('Menu Selection Click.wav')
 pain_sound = pygame.mixer.Sound(random.choice(pains))
+coin_sound = pygame.mixer.Sound('sfx/Coin.wav')
 
 
 

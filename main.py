@@ -313,6 +313,7 @@ def game():
                 active_sprite_list.remove(bullet)
                 # constants.score_up.play()
                 score += 1
+        print(constants.health)
 
 
         # ALL CODE TO DRAW SHOULD GO BELOW THIS COMMENT

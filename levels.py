@@ -6,6 +6,7 @@ import enemylast
 import items
 import screens
 import power_ups
+import heart
 
 
 class Level():
@@ -141,7 +142,9 @@ class Level_01(Level):
         #           [platforms.DOOR_MID,2806,550],
         #           [platforms.DOOR_TOP,2806,500]]
 
-        items_list = [ [power_ups.WORM,300,300]]
+        coin_list = [ [power_ups.WORM,300,300]]
+
+        heart_list = [ [heart.WORM,600,300]]
 
         mobs = [ [enemylast.WORM, 550, 437, 500, 640, 2],
                     [enemylast.WORM, 1400, 535, 1250, 1800, 3],
@@ -151,8 +154,15 @@ class Level_01(Level):
 
         # bad_items = [platforms.LAVA_TOP, 200, 1350]
 
-        for item in items_list:                    # TODO Add usable items to game
+        for item in coin_list:                    # TODO Add usable items to game
             block = power_ups.Coin(item[0])
+            block.rect.x = item[1]
+            block.rect.y = item[2]
+            block.player = self.player
+            self.item_list.add(block)
+
+        for item in heart_list:  # TODO Add usable items to game
+            block = heart.Heart(item[0])
             block.rect.x = item[1]
             block.rect.y = item[2]
             block.player = self.player

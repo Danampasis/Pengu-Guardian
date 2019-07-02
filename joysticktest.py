@@ -1,5 +1,3 @@
-#!/usr/bin/env python2
-
 from pygame import display, joystick, event
 from pygame import QUIT, JOYAXISMOTION, JOYBALLMOTION, JOYHATMOTION, JOYBUTTONUP, JOYBUTTONDOWN
 

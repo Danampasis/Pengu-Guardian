@@ -3,12 +3,10 @@ import pygame
 import constants
 import platforms
 import enemylast
-import items
 import screens
 import power_ups
 import heart
 import penguins
-
 
 
 class Level():
@@ -310,8 +308,6 @@ class Level_01(Level):
         # self.enemy_list.add(block)
 
 
-
-
 # Create platforms for the level
 class Level_02(Level):
     """ Definition for level 2. """
@@ -448,6 +444,7 @@ class Level_04(Level):
         self.level_limit_left = 0
         self.weapons = False
         self.music = 'sfx/Credits_edit.ogg'
+
 
 class Level_TEST(Level):
     """ Definition for level TEST. """

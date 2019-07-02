@@ -16,6 +16,8 @@ import constants
 #   Height of sprite
 
 WORM            = (0,0,128,128)
+
+
 class Enemy(pygame.sprite.Sprite):
     """ Platform the user can jump on """
     frames_r = []

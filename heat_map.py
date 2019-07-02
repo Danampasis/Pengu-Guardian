@@ -6,10 +6,9 @@ import csv
 
 with open('user_actions.csv') as csv_file:
     csv_reader = csv.reader(csv_file, delimiter=',')
-    # line_count = 0
     source_img = Image.open('img/level_test_bg.png')
     for row in csv_reader:
-        if len(row) < 1:
+        if len(row) < 1:  # checks if row is empty
             continue
         if int(row[0]) == 32:
             draw = ImageDraw.Draw(source_img)
@@ -26,6 +25,5 @@ with open('user_actions.csv') as csv_file:
         if int(row[0]) == 114:
             draw = ImageDraw.Draw(source_img)
             draw.rectangle(((int(row[1]), int(row[2])), (int(row[1])+80, int(row[2])+80)), fill="green")
-        # draw.text((20, 70), "something123", font=ImageFont.truetype("font_path123"))
 
         source_img.save('heat_map.jpeg', "JPEG")

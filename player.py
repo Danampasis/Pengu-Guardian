@@ -8,7 +8,7 @@ import constants
 
 from platforms import MovingPlatform
 from spritesheet_functions import SpriteSheet
-from enemies import MovingEnemy
+
 
 class Player(pygame.sprite.Sprite):
     """ This class represents the bar at the bottom that the player
@@ -80,12 +80,9 @@ class Player(pygame.sprite.Sprite):
         self.hit_frames.append(hit_1)
 
         # flip right facing images
-        # image = pygame.image.load('character_blue.png')
-        # image = pygame.transform.scale(image, (width, height))
+
         walk_1l = pygame.transform.flip(walk_1, True, False)
         self.walking_frames_l.append(walk_1l)
-        # image = pygame.image.load('character_blue2.png')
-        # image = pygame.transform.scale(image, (width, height))
         walk_2l = pygame.transform.flip(walk_2, True, False)
         self.walking_frames_l.append(walk_2l)
         walk_3l = pygame.transform.flip(walk_3, True, False)
@@ -167,7 +164,7 @@ class Player(pygame.sprite.Sprite):
         if Player.direction == "R" and Player.player_hit == True:
             # frame = (pos // 30) % len(self.walking_frames_r)
             self.image = self.hit_frames[0]
-        if Player.direction == "R" and MovingEnemy.player_hit == True:
+        if Player.direction == "R":
             frame = (pos // 30) % len(self.walking_frames_r)
             self.image = self.walking_frames_r[frame]
 

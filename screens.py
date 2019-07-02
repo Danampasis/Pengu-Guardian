@@ -1,5 +1,3 @@
-# Create text objects
-
 from constants import *
 import background
 import levels

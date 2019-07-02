@@ -165,8 +165,8 @@ def game():
                     if event.key == pygame.K_UP or event.key == pygame.K_w:
                         player.jump()
                         # jump_sound.play()
-                    if event.key == pygame.K_2:
-                        player.go_in()
+                    # if event.key == pygame.K_2:     #TODO Uncomment when going into buildings possible
+                    #     player.go_in()
                     if event.key == pygame.K_5:
                         constants.speed = 12
                     if event.key == pygame.K_SPACE:

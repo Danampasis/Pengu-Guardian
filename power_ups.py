@@ -84,7 +84,6 @@ class Coin(pygame.sprite.Sprite):
         # See if we hit the player
         hit = pygame.sprite.collide_rect(self, self.player)
         if hit:
-            print("hit")
             # We did hit the player. Shove the player around and
             # assume he/she won't hit anything else.
 
@@ -96,9 +95,9 @@ class Coin(pygame.sprite.Sprite):
             #     # Otherwise if we are moving left, do the opposite.
             #     self.player.rect.left = self.rect.right
             # constants.pain_sound.play()
-            if constants.health < 900:
-                constants.health = constants.health + 100
             constants.coin_sound.play()
+            constants.score += 10
+            constants.coins += 1
             self.kill()
 
 #

@@ -62,7 +62,6 @@ class Heart(pygame.sprite.Sprite):
         # See if we hit the player
         hit = pygame.sprite.collide_rect(self, self.player)
         if hit:
-            print("hit")
             # We did hit the player. Shove the player around and
             # assume he/she won't hit anything else
             # If we are moving right, set our right side
@@ -74,6 +73,6 @@ class Heart(pygame.sprite.Sprite):
             #     self.player.rect.left = self.rect.right
             # constants.pain_sound.play()
             if constants.health < 900:
-                constants.health = constants.health + 100
-            constants.heart_sound.play()
+                constants.health = constants.health + 300
+                constants.heart_sound.play()
             self.kill()

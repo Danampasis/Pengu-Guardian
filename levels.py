@@ -133,7 +133,12 @@ class Level_01(Level):
                   [platforms.GRASS_MIDDLE, 4040, 400],
                   [platforms.GRASS_MIDDLE, 4110, 400],
                   [platforms.GRASS_MIDDLE, 4180, 400],
-                  [platforms.GRASS_RIGHT, 4250, 400]
+                  [platforms.GRASS_RIGHT, 4250, 400],
+                  [platforms.STONE_PLATFORM_LEFT, 4400, 400],
+                  [platforms.STONE_PLATFORM_MIDDLE, 4470, 400],
+                  [platforms.STONE_PLATFORM_MIDDLE, 4540, 400],
+                  [platforms.STONE_PLATFORM_MIDDLE, 4610, 400],
+                  [platforms.STONE_PLATFORM_RIGHT, 4680, 400],
                   # [platforms.LAVA, 400, 585]
                   ]
 
@@ -142,9 +147,9 @@ class Level_01(Level):
         #           [platforms.DOOR_MID,2806,550],
         #           [platforms.DOOR_TOP,2806,500]]
 
-        coin_list = [ [power_ups.WORM,300,300]]
+        coin_list = [ [power_ups.WORM,1950,80]]
 
-        heart_list = [ [heart.WORM,600,300]]
+        heart_list = [ [heart.WORM,2760,100]]
 
         mobs = [ [enemylast.WORM, 550, 437, 500, 640, 2],
                     [enemylast.WORM, 1400, 535, 1250, 1800, 3],
@@ -236,6 +241,7 @@ class Level_02(Level):
         self.level_limit_right = 4000
         self.level_limit_left = 0
         self.weapons = True
+        self.music_on = constants.music
         self.music = 'sfx/Overhead Map - Village.mp3'
 
         # Array with type of platform, and x, y location of the platform.
@@ -287,6 +293,7 @@ class Level_03(Level):
         self.level_limit_right = 3000
         self.level_limit_left = 0
         self.weapons = False
+        self.music_on = constants.music
         self.music = 'sfx/Grasslands Theme.mp3'
 
         # Array with type of platform, and x, y location of the platform.

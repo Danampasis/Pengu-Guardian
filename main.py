@@ -78,7 +78,7 @@ def game():
 
     animation_list = pygame.sprite.Group()
 
-    score = 0
+    # score = 0
 
     # font = pygame.font.Font('Wonder_Boy_In_Monster_World.ttf',30)
 
@@ -200,6 +200,7 @@ def game():
                         print('Current position is:',current_position)
                         print('Current music is:',current_level.music)
                         print('Is player hit?: ', MovingPlatform.player_hit)
+                        print("Current health:", constants.health)
                         print('------------------------------------------------------')
                         numTimesToRepeat -= 1  # repeat one less time because we just did it
                         if numTimesToRepeat == 0:  # do we repeat again?
@@ -270,7 +271,7 @@ def game():
 
         if constants.health == 0:
             screens.death()
-        if constants.health >= 900:
+        if constants.health > 600:
             img = pygame.image.load('img/full health.png')
         if constants.health < 600:
             img = pygame.image.load('img/middle health.png')
@@ -312,8 +313,8 @@ def game():
                 bullet_list.remove(bullet)
                 active_sprite_list.remove(bullet)
                 # constants.score_up.play()
-                score += 1
-        print(constants.health)
+                constants.score += 1
+
 
 
         # ALL CODE TO DRAW SHOULD GO BELOW THIS COMMENT
@@ -322,7 +323,7 @@ def game():
         # draw_text(screen, 'Magazines: ', 18, constants.SCREEN_WIDTH - 760, 5)
         # draw_text(screen, reload, 18, 50, 10)
         draw_text(screen,text, 18, 20, 10)
-        draw_text(screen,'Score: '+str(score),18, 400, 10)
+        draw_text(screen,'Score: '+str(constants.score),18, 400, 10)
         draw_text(screen, constants.version, 10, 60, 585) # TODO remove before release
         screen.blit(bullets, (40, 5))
         screen.blit(img, (670, 5))

@@ -10,6 +10,14 @@ customise = None
 current_level = 0
 player_color = ""
 
+def draw_text(surf, text, size, x, y):
+    font_name = 'Wonder_Boy_In_Monster_World.ttf'
+    font = pygame.font.Font(font_name, size)
+    text_surface = font.render(text, True, constants.BLACK)
+    text_rect = text_surface.get_rect()
+    text_rect.midtop = (x, y)
+    surf.blit(text_surface, text_rect)
+
 def text_objects(text, font):
     textSurface = font.render(text, True, BLACK)
     return textSurface, textSurface.get_rect()
@@ -55,7 +63,7 @@ def main_menu():
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_n:
                     # constants.select_sound.play()
-                    constants.jump_sound.play()
+                    constants.start_sound.play()
                     intro = False
                     break
                 if event.key == pygame.K_q:
@@ -314,6 +322,8 @@ def level_intro():
         TextSurf, TextRect = text_objects("Level "+str(current_level+1), largeText)
         TextRect.center = ((SCREEN_WIDTH / 2), (SCREEN_HEIGHT / 8))
         screen.blit(TextSurf, TextRect)
+        draw_text(screen, 'Score: ' + str(constants.score), 18, 400, 400)
+        draw_text(screen, 'Coins: ' + str(constants.coins), 18, 400, 500)
 
 
         pygame.display.update()

@@ -37,11 +37,12 @@ heart_beat = pygame.mixer.Sound('sfx/heart beat.ogg')
 pain_sound = pygame.mixer.Sound(random.choice(pains))
 coin_sound = pygame.mixer.Sound('sfx/Coin.wav')
 heart_sound = pygame.mixer.Sound('sfx/Replenish.wav')
+start_sound = pygame.mixer.Sound('sfx/Start.wav')
 
 
 
 # Music on or off
-music = False
+music = True
 
 #Character selection
 character_color = 'Blue' # TODO character color customisation
@@ -58,6 +59,11 @@ elif character_color == 'Blue':
 health = 900
 
 version = 'ALPHA_v0.1'
+
+#Player Score
+
+score = 0
+coins = 0
 
 
 

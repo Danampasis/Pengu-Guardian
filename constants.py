@@ -38,6 +38,7 @@ pain_sound = pygame.mixer.Sound(random.choice(pains))
 coin_sound = pygame.mixer.Sound('sfx/Coin.wav')
 heart_sound = pygame.mixer.Sound('sfx/Replenish.wav')
 start_sound = pygame.mixer.Sound('sfx/Start.wav')
+pengu_sound = pygame.mixer.Sound('sfx/penguin_3.ogg')
 
 
 

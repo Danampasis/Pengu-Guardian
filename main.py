@@ -308,12 +308,18 @@ def game():
         for bullet in bullet_list:
             # See if it hit a block
             block_hit_list = pygame.sprite.spritecollide(bullet, levels.Level.enemy_list, True)
+            pengu_hit_list = pygame.sprite.spritecollide(bullet, levels.Level.pengu_list, True)
             # For each block hit, remove the bullet and add to the score
             for block in block_hit_list:
                 bullet_list.remove(bullet)
                 active_sprite_list.remove(bullet)
                 # constants.score_up.play()
                 constants.score += 1
+            for block in pengu_hit_list:
+                bullet_list.remove(bullet)
+                active_sprite_list.remove(bullet)
+                # constants.score_up.play()
+                constants.score -= 100
 
 
 

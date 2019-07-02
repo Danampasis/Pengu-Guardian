@@ -7,6 +7,7 @@ import items
 import screens
 import power_ups
 import heart
+import penguins
 
 
 class Level():
@@ -19,6 +20,7 @@ class Level():
     platform_list = None
     enemy_list = pygame.sprite.Group()
     item_list = pygame.sprite.Group()
+    pengu_list = pygame.sprite.Group()
 
     # Background image
     background = None
@@ -41,6 +43,7 @@ class Level():
         self.platform_list = pygame.sprite.Group()
         # self.enemy_list = pygame.sprite.Group()
         self.item_list = pygame.sprite.Group()
+        self.pengu_list = pygame.sprite.Group()
         self.player = player
 
     # Update everything on this level
@@ -49,6 +52,7 @@ class Level():
         self.platform_list.update()
         Level.enemy_list.update()
         self.item_list.update()
+        self.pengu_list.update()
 
     def draw(self, screen):
         """ Draw everything on this level. """
@@ -64,6 +68,7 @@ class Level():
         self.platform_list.draw(screen)
         Level.enemy_list.draw(screen)
         self.item_list.draw(screen)
+        self.pengu_list.draw(screen)
 
     def shift_world(self, shift_x):
         """ When the user moves left/right and we need to scroll everything: """
@@ -79,6 +84,9 @@ class Level():
             enemy.rect.x += shift_x
 
         for item in self.item_list:
+            item.rect.x += shift_x
+
+        for item in self.pengu_list:
             item.rect.x += shift_x
 
 # Create platforms for the level
@@ -139,6 +147,46 @@ class Level_01(Level):
                   [platforms.STONE_PLATFORM_MIDDLE, 4540, 400],
                   [platforms.STONE_PLATFORM_MIDDLE, 4610, 400],
                   [platforms.STONE_PLATFORM_RIGHT, 4680, 400],
+                  [platforms.GRASS_LEFT, 5500, 500],
+                  [platforms.GRASS_MIDDLE, 5570, 500],
+                  [platforms.GRASS_RIGHT, 5640, 500],
+                  [platforms.GRASS_LEFT, 5800, 400],
+                  [platforms.GRASS_MIDDLE, 5870, 400],
+                  [platforms.GRASS_RIGHT, 5940, 400],
+                  [platforms.GRASS_LEFT, 6000, 500],
+                  [platforms.GRASS_MIDDLE, 6070, 500],
+                  [platforms.GRASS_RIGHT, 6140, 500],
+                  [platforms.STONE_PLATFORM_LEFT, 6120, 280],
+                  [platforms.STONE_PLATFORM_MIDDLE, 6190, 280],
+                  [platforms.STONE_PLATFORM_RIGHT, 6260, 280],
+                  [platforms.STONE_PLATFORM_LEFT, 6870, 280],
+                  [platforms.STONE_PLATFORM_MIDDLE, 6940, 280],
+                  [platforms.STONE_PLATFORM_RIGHT, 7010, 280],
+                  [platforms.STONE_PLATFORM_LEFT, 7600, 450],
+                  [platforms.STONE_PLATFORM_MIDDLE, 7670, 450],
+                  [platforms.STONE_PLATFORM_RIGHT, 7740, 450],
+                  [platforms.STONE_PLATFORM_LEFT, 8550, 150],
+                  [platforms.STONE_PLATFORM_MIDDLE, 8620, 150],
+                  [platforms.STONE_PLATFORM_MIDDLE, 8690, 150],
+                  [platforms.STONE_PLATFORM_MIDDLE, 8760, 150],
+                  [platforms.STONE_PLATFORM_RIGHT, 8830, 150],
+                  [platforms.STONE, 8820, 80],
+                  [platforms.STONE, 8820, 10],
+                  [platforms.GRASS_LEFT, 9600, 500],
+                  [platforms.GRASS_MIDDLE, 9670, 500],
+                  [platforms.GRASS_RIGHT, 9740, 500],
+                  [platforms.GRASS_LEFT, 9900, 400],
+                  [platforms.GRASS_MIDDLE, 9970, 400],
+                  [platforms.GRASS_MIDDLE, 10040, 400],
+                  [platforms.GRASS_MIDDLE, 10110, 400],
+                  [platforms.GRASS_MIDDLE, 10180, 400],
+                  [platforms.GRASS_RIGHT, 10250, 400],
+                  [platforms.STONE_PLATFORM_LEFT, 10400, 400],
+                  [platforms.STONE_PLATFORM_MIDDLE, 10470, 400],
+                  [platforms.STONE_PLATFORM_MIDDLE, 10540, 400],
+                  [platforms.STONE_PLATFORM_MIDDLE, 10610, 400],
+                  [platforms.STONE_PLATFORM_RIGHT, 10680, 400]
+
                   # [platforms.LAVA, 400, 585]
                   ]
 
@@ -147,7 +195,8 @@ class Level_01(Level):
         #           [platforms.DOOR_MID,2806,550],
         #           [platforms.DOOR_TOP,2806,500]]
 
-        coin_list = [ [power_ups.WORM,1950,80]]
+        coin_list = [ [power_ups.WORM,1950,80],
+                      [power_ups.WORM, 10110, 250]]
 
         heart_list = [ [heart.WORM,2760,100]]
 
@@ -156,6 +205,9 @@ class Level_01(Level):
                     [enemylast.WORM, 1900, 535, 1850, 2000, 3],
                     [enemylast.WORM, 2500, 535, 2400, 2700, 3],
                     [enemylast.WORM, 4100, 335, 3970, 4250, 3]]
+
+        pengus = [[penguins.WORM, 4800,535,4500,5300,3],
+                  [penguins.WORM, 11000, 535, 10740, 11990, 3]]
 
         # bad_items = [platforms.LAVA_TOP, 200, 1350]
 
@@ -193,6 +245,17 @@ class Level_01(Level):
             block.level = self
             self.enemy_list.add(block)
 
+        for penguin in pengus:
+            block = penguins.MovingPenguin(penguin[0])
+            block.rect.x = penguin[1]
+            block.rect.y = penguin[2]
+            block.boundary_left = penguin[3]
+            block.boundary_right = penguin[4]
+            block.change_x = penguin[5]
+            block.player = self.player
+            block.level = self
+            self.pengu_list.add(block)
+
 
         # Add a custom moving platform
         block = platforms.MovingPlatform(platforms.STONE_PLATFORM_MIDDLE)
@@ -207,6 +270,26 @@ class Level_01(Level):
 
         block = platforms.MovingPlatform(platforms.STONE_PLATFORM_MIDDLE)
         block.rect.x = 2250
+        block.rect.y = 300
+        block.boundary_top = 100
+        block.boundary_bottom = 400
+        block.change_y = -5
+        block.player = self.player
+        block.level = self
+        self.platform_list.add(block)
+
+        block = platforms.MovingPlatform(platforms.STONE_PLATFORM_MIDDLE)
+        block.rect.x = 6350
+        block.rect.y = 280
+        block.boundary_left = 6350
+        block.boundary_right = 6600
+        block.change_x = 5
+        block.player = self.player
+        block.level = self
+        self.platform_list.add(block)
+
+        block = platforms.MovingPlatform(platforms.STONE_PLATFORM_MIDDLE)
+        block.rect.x = 7250
         block.rect.y = 300
         block.boundary_top = 100
         block.boundary_bottom = 400
@@ -288,8 +371,8 @@ class Level_03(Level):
         # Call the parent constructor
         Level.__init__(self, player)
 
-        self.background = pygame.image.load("img/background_03.png").convert()
-        self.background.set_colorkey(constants.WHITE)
+        self.background = pygame.image.load("img/iceberg.png")
+        # self.background.set_colorkey(constants.WHITE)
         self.level_limit_right = 3000
         self.level_limit_left = 0
         self.weapons = False
@@ -314,27 +397,41 @@ class Level_03(Level):
                   [platforms.STONE_PLATFORM_RIGHT, 2010, 280],
                   ]
 
+        pengus = [[penguins.WORM, 940, 535, 840, 1300, 3]]
+
+
+        for penguin in pengus:
+            block = penguins.MovingPenguin(penguin[0])
+            block.rect.x = penguin[1]
+            block.rect.y = penguin[2]
+            block.boundary_left = penguin[3]
+            block.boundary_right = penguin[4]
+            block.change_x = penguin[5]
+            block.player = self.player
+            block.level = self
+            self.pengu_list.add(block)
+
 
         # Go through the array above and add platforms
-        for platform in level:
-            block = platforms.Platform(platform[0])
-            block.rect.x = platform[1]
-            block.rect.y = platform[2]
-            block.player = self.player
-            self.platform_list.add(block)
-            # pygame.mixer.music.load('Grasslands Theme.mp3')
-            # pygame.mixer.music.play(-1)
+        # for platform in level:
+        #     block = platforms.Platform(platform[0])
+        #     block.rect.x = platform[1]
+        #     block.rect.y = platform[2]
+        #     block.player = self.player
+        #     self.platform_list.add(block)
+        #     # pygame.mixer.music.load('Grasslands Theme.mp3')
+        #     # pygame.mixer.music.play(-1)
 
         # Add a custom moving platform
-        block = platforms.MovingPlatform(platforms.STONE_PLATFORM_MIDDLE)
-        block.rect.x = 1350
-        block.rect.y = 280
-        block.boundary_left = 1350
-        block.boundary_right = 1600
-        block.change_x = 5
-        block.player = self.player
-        block.level = self
-        self.platform_list.add(block)
+        # block = platforms.MovingPlatform(platforms.STONE_PLATFORM_MIDDLE)
+        # block.rect.x = 1350
+        # block.rect.y = 280
+        # block.boundary_left = 1350
+        # block.boundary_right = 1600
+        # block.change_x = 5
+        # block.player = self.player
+        # block.level = self
+        # self.platform_list.add(block)
 
 class Level_04(Level):
     """ Definition for level 3. """

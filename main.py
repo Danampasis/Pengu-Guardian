@@ -10,6 +10,8 @@ from platforms import MovingPlatform
 
 from player import Player
 import enemylast
+import csv
+# import heat_map
 
 
 # font_name = pygame.font.match_font('arial')
@@ -96,254 +98,260 @@ def game():
     clock = pygame.time.Clock()
 
     # -------- Main Program Loop -----------
-    while not done:
-        for event in pygame.event.get(): # User did something
-            if event.type == pygame.QUIT: # If user clicked close
-                print("Average fps for this session:",avg_fps)
-                done = True # Flag that we are done so we exit this loop
-            if event.type == pygame.JOYBUTTONDOWN:
-                if j.get_button(5):
-                    if current_level.weapons:
-                        if len(ammo_list) < 6:
-                            constants.click_sound.play()
-                            bullet = Bullet()
-                            # Set the bullet so it is where the player is
-                            bullet.rect.x = player.rect.x
-                            bullet.rect.y = player.rect.y + 30
-                            # Add the bullet to the lists
-                            active_sprite_list.add(bullet)
-                            bullet_list.add(bullet)
-                            ammo_list.add(bullet)
+    with open('user_actions.csv', mode='w') as user_actions:
+        while not done:
+            for event in pygame.event.get(): # User did something
+                if event.type == pygame.QUIT: # If user clicked close
+                    print("Average fps for this session:",avg_fps)
+                    done = True # Flag that we are done so we exit this loop
+                if event.type == pygame.JOYBUTTONDOWN:
+                    if j.get_button(5):
+                        if current_level.weapons:
+                            if len(ammo_list) < 6:
+                                constants.click_sound.play()
+                                bullet = Bullet()
+                                # Set the bullet so it is where the player is
+                                bullet.rect.x = player.rect.x
+                                bullet.rect.y = player.rect.y + 30
+                                # Add the bullet to the lists
+                                active_sprite_list.add(bullet)
+                                bullet_list.add(bullet)
+                                ammo_list.add(bullet)
+                            else:
+                                constants.out_of_bullets.play()
                         else:
                             constants.out_of_bullets.play()
-                    else:
-                        constants.out_of_bullets.play()
-                if j.get_button(2):
-                    player.jump()
-                if j.get_button(4):
-                    if magazine_limit >= 1:
-                        if len(ammo_list) == 6:
-                            ammo_list.empty()
-                            constants.reload_sound.play()
-                            magazine_limit = magazine_limit - 1
-                    else:
-                        constants.out_of_bullets.play()
-                if j.get_button(9):
-                    screens.ending()
-                if j.get_button(8):
-                    screens.help()
-            if event.type == pygame.JOYAXISMOTION:
-                value = j.get_axis(0)
-                if round(value) >= 1:
-                    player.go_right()
-                if round(value) == 0:
-                    player.stop()
-                if round(value) == -1:
-                    player.go_left()
-            if event.type == pygame.KEYDOWN:
-                keymod = pygame.key.get_mods()
-                if event.key == pygame.K_LEFT or event.key == pygame.K_a:
-                    player.go_left()
-                if event.key == pygame.K_r:
-                    if magazine_limit >= 1:
-                        if len(ammo_list) == 6:
-                            ammo_list.empty()
-                            constants.reload_sound.play()
-                            magazine_limit = magazine_limit - 1
-                    # else:
-                    #     constants.jump_sound.play() # TODO out of magazines sound(maybe)
-                if event.key == pygame.K_RIGHT or event.key == pygame.K_d:
-                    player.go_right()
-                if event.key == pygame.K_EQUALS and keymod == 1:
-                    player.god()
-                if event.key == pygame.K_1 and keymod == 1:  # Toggles fps print on console
-                    if debug_fps == False:
-                        debug_fps = True
-                    else:
-                        debug_fps = False
-                if event.key == pygame.K_UP or event.key == pygame.K_w:
-                    player.jump()
-                    # jump_sound.play()
-                if event.key == pygame.K_2:
-                    player.go_in()
-                if event.key == pygame.K_5:
-                    constants.speed = 12
-                if event.key == pygame.K_SPACE:
-                    if current_level.weapons:
-                        if len(ammo_list) < 6:
-                            constants.click_sound.play()
-                            bullet = Bullet()
-                            # Set the bullet so it is where the player is
-                            bullet.rect.x = player.rect.x
-                            bullet.rect.y = player.rect.y + 30
-                            # Add the bullet to the lists
-                            active_sprite_list.add(bullet)
-                            bullet_list.add(bullet)
-                            ammo_list.add(bullet)
+                    if j.get_button(2):
+                        player.jump()
+                    if j.get_button(4):
+                        if magazine_limit >= 1:
+                            if len(ammo_list) == 6:
+                                ammo_list.empty()
+                                constants.reload_sound.play()
+                                magazine_limit = magazine_limit - 1
                         else:
                             constants.out_of_bullets.play()
-                    else:
-                        constants.out_of_bullets.play()
-                #Debugging Button - Shows info on console
-                if event.key == pygame.K_BACKQUOTE and keymod == 1:
-                    starttime = time.time()
-                    numTimesToRepeat = 5
-                    while True:
-                        print('Player is facing:', Player.direction)
-                        print('Player x value is:', player.rect.x)
-                        print('Player y valus is:', player.rect.y)
-                        print('Weapons status:', current_level.weapons)
-                        print('Current level limit:', current_level.level_limit_right)
-                        print('Current level world shift:', current_level.world_shift)
-                        print('Number of Levels:',len(level_list))
-                        print('Current Level:',current_level_no)
-                        print('Current position is:',current_position)
-                        print('Current music is:',current_level.music)
-                        print('Is player hit?: ', MovingPlatform.player_hit)
-                        print("Current health:", constants.health)
-                        print('------------------------------------------------------')
-                        numTimesToRepeat -= 1  # repeat one less time because we just did it
-                        if numTimesToRepeat == 0:  # do we repeat again?
-                            break
-                        # time.sleep(60.0 - ((time.time() - starttime) % 60.0))
+                    if j.get_button(9):
+                        screens.ending()
+                    if j.get_button(8):
+                        screens.help()
+                if event.type == pygame.JOYAXISMOTION:
+                    value = j.get_axis(0)
+                    if round(value) >= 1:
+                        player.go_right()
+                    if round(value) == 0:
+                        player.stop()
+                    if round(value) == -1:
+                        player.go_left()
+                if event.type == pygame.KEYDOWN:
+                    keymod = pygame.key.get_mods()
+                    user_actions_writer = csv.writer(user_actions, delimiter=',', quotechar='"',
+                                                     quoting=csv.QUOTE_MINIMAL)
+                    user_actions_writer.writerow([event.key, current_position, player.rect.y])
+                    if event.key == pygame.K_LEFT or event.key == pygame.K_a:
+                        player.go_left()
+                    if event.key == pygame.K_r:
+                        if magazine_limit >= 1:
+                            if len(ammo_list) == 6:
+                                ammo_list.empty()
+                                constants.reload_sound.play()
+                                magazine_limit = magazine_limit - 1
+                        # else:
+                        #     constants.jump_sound.play() # TODO out of magazines sound(maybe)
+                    if event.key == pygame.K_RIGHT or event.key == pygame.K_d:
+                        player.go_right()
+                    if event.key == pygame.K_EQUALS and keymod == 1:
+                        player.god()
+                    if event.key == pygame.K_1 and keymod == 1:  # Toggles fps print on console
+                        if debug_fps == False:
+                            debug_fps = True
+                        else:
+                            debug_fps = False
+                    if event.key == pygame.K_UP or event.key == pygame.K_w:
+                        player.jump()
+                        # jump_sound.play()
+                    if event.key == pygame.K_2:
+                        player.go_in()
+                    if event.key == pygame.K_5:
+                        constants.speed = 12
+                    if event.key == pygame.K_SPACE:
+                        if current_level.weapons:
+                            if len(ammo_list) < 6:
+                                constants.click_sound.play()
+                                bullet = Bullet()
+                                # Set the bullet so it is where the player is
+                                bullet.rect.x = player.rect.x
+                                bullet.rect.y = player.rect.y + 30
+                                # Add the bullet to the lists
+                                active_sprite_list.add(bullet)
+                                bullet_list.add(bullet)
+                                ammo_list.add(bullet)
+                            else:
+                                constants.out_of_bullets.play()
+                        else:
+                            constants.out_of_bullets.play()
+                    #Debugging Button - Shows info on console
+                    if event.key == pygame.K_BACKQUOTE and keymod == 1:
+                        starttime = time.time()
+                        numTimesToRepeat = 5
+                        while True:
+                            print('Player is facing:', Player.direction)
+                            print('Player x value is:', player.rect.x)
+                            print('Player y valus is:', player.rect.y)
+                            print('Weapons status:', current_level.weapons)
+                            print('Current level limit:', current_level.level_limit_right)
+                            print('Current level world shift:', current_level.world_shift)
+                            print('Number of Levels:',len(level_list))
+                            print('Current Level:',current_level_no)
+                            print('Current position is:',current_position)
+                            print('Current music is:',current_level.music)
+                            print('Is player hit?: ', MovingPlatform.player_hit)
+                            print("Current health:", constants.health)
+                            print('------------------------------------------------------')
+                            numTimesToRepeat -= 1  # repeat one less time because we just did it
+                            if numTimesToRepeat == 0:  # do we repeat again?
+                                break
+                            # time.sleep(60.0 - ((time.time() - starttime) % 60.0))
 
-            if event.type == pygame.KEYUP:
-                if event.key == pygame.K_LEFT or event.key == pygame.K_a and player.change_x < 0:
-                    player.stop()
-                if event.key == pygame.K_RIGHT or event.key == pygame.K_d and player.change_x > 0:
-                    player.stop()
+                if event.type == pygame.KEYUP:
+                    if event.key == pygame.K_LEFT or event.key == pygame.K_a and player.change_x < 0:
+                        player.stop()
+                    if event.key == pygame.K_RIGHT or event.key == pygame.K_d and player.change_x > 0:
+                        player.stop()
 
-        for bullet in bullet_list:
-            if bullet.rect.x > player.rect.x+500 or bullet.rect.x < player.rect.x-500:
-                bullet_list.remove(bullet)
-                active_sprite_list.remove(bullet)
-        # Update the player.
-        active_sprite_list.update()
+            for bullet in bullet_list:
+                if bullet.rect.x > player.rect.x+500 or bullet.rect.x < player.rect.x-500:
+                    bullet_list.remove(bullet)
+                    active_sprite_list.remove(bullet)
+            # Update the player.
+            active_sprite_list.update()
 
-        # Update items in the level
-        current_level.update()
+            # Update items in the level
+            current_level.update()
 
-        # If the player gets near the right side, shift the world left (-x)
-        if player.rect.x >= 500:
-            diff = player.rect.x - 500
-            player.rect.x = 500
-            current_level.shift_world(-diff)
-
-        # If the player gets near the left side, shift the world right (+x)
-        current_position = player.rect.x + abs(current_level.world_shift)
-        if player.rect.x <= 120:
-            diff = 120 - player.rect.x
-            player.rect.x = 120
-            if current_position > 120:
-                current_level.shift_world(diff)
-            else:
+            # If the player gets near the right side, shift the world left (-x)
+            if player.rect.x >= 500:
+                diff = player.rect.x - 500
+                player.rect.x = 500
                 current_level.shift_world(-diff)
-                constants.bad_sound.play()
 
-        # If the player gets to the end of the level, go to the next level
-        current_position = player.rect.x + abs(current_level.world_shift)
-        if current_position > current_level.level_limit_right:
-            screens.level_intro()
-            player.rect.x = 120
-            if current_level_no < len(level_list)-1:
-                current_level_no += 1
-                screens.current_level += 1
-                current_level = level_list[current_level_no]
-                player.level = current_level
-                pygame.mixer.music.load(current_level.music)
-                pygame.mixer.music.play(-1)
-            if current_level_no == len(level_list)-1:
-                screens.ending()
+            # If the player gets near the left side, shift the world right (+x)
+            current_position = player.rect.x + abs(current_level.world_shift)
+            if player.rect.x <= 120:
+                diff = 120 - player.rect.x
+                player.rect.x = 120
+                if current_position > 120:
+                    current_level.shift_world(diff)
+                else:
+                    current_level.shift_world(-diff)
+                    constants.bad_sound.play()
 
-        # Check level 0 position to enter customisation building
+            # If the player gets to the end of the level, go to the next level
+            current_position = player.rect.x + abs(current_level.world_shift)
+            if current_position > current_level.level_limit_right:
+                screens.level_intro()
+                player.rect.x = 120
+                if current_level_no < len(level_list)-1:
+                    current_level_no += 1
+                    screens.current_level += 1
+                    current_level = level_list[current_level_no]
+                    player.level = current_level
+                    pygame.mixer.music.load(current_level.music)
+                    pygame.mixer.music.play(-1)
+                if current_level_no == len(level_list)-1:
+                    screens.ending()
 
-        # if current_level_no == 0:
-        #     if current_position > 2900 and current_position < 3100:
-        #         if event.key == pygame.K_f:
-        #             screens.customise() # TODO Show Screen
+            # Check level 0 position to enter customisation building
 
-        fps_list =  []
-        fps = int(clock.get_fps())
-        fps_list.append(fps)
-        avg_fps = numpy.average(fps_list)
-        if debug_fps == True:
-            print(fps)
+            # if current_level_no == 0:
+            #     if current_position > 2900 and current_position < 3100:
+            #         if event.key == pygame.K_f:
+            #             screens.customise() # TODO Show Screen
 
-        if constants.health == 0:
-            screens.death()
-        if constants.health > 600:
-            img = pygame.image.load('img/full health.png')
-        if constants.health < 600:
-            img = pygame.image.load('img/middle health.png')
-        if constants.health < 300:
-            # pygame.mixer.music.stop()
-            # constants.heart_beat.play(-1)  # TODO heartbeat sound when health is low
-            img = pygame.image.load('img/low health.png')
+            fps_list =  []
+            fps = int(clock.get_fps())
+            fps_list.append(fps)
+            avg_fps = numpy.average(fps_list)
+            if debug_fps == True:
+                print(fps)
 
-        # SHOTGUN SHELL IMAGE
-        if len(ammo_list) == 0:
-            bullets = pygame.image.load('img/full ammo.png')
-        if len(ammo_list) == 1:
-            bullets = pygame.image.load('img/5 ammo.png')
-        if len(ammo_list) == 2:
-            bullets = pygame.image.load('img/4 ammo.png')
-        if len(ammo_list) == 3:
-            bullets = pygame.image.load('img/3 ammo.png')
-        if len(ammo_list) == 4:
-            bullets = pygame.image.load('img/2 ammo.png')
-        if len(ammo_list) == 5:
-            bullets = pygame.image.load('img/1 ammo.png')
-        if len(ammo_list) == 6:
-            bullets = pygame.image.load('img/reload.png')
+            if constants.health == 0:
+                screens.death()
+            if constants.health > 600:
+                img = pygame.image.load('img/full health.png')
+            if constants.health < 600:
+                img = pygame.image.load('img/middle health.png')
+            if constants.health < 300:
+                # pygame.mixer.music.stop()
+                # constants.heart_beat.play(-1)  # TODO heartbeat sound when health is low
+                img = pygame.image.load('img/low health.png')
 
-        if magazine_limit > 0:
+            # SHOTGUN SHELL IMAGE
+            if len(ammo_list) == 0:
+                bullets = pygame.image.load('img/full ammo.png')
+            if len(ammo_list) == 1:
+                bullets = pygame.image.load('img/5 ammo.png')
+            if len(ammo_list) == 2:
+                bullets = pygame.image.load('img/4 ammo.png')
+            if len(ammo_list) == 3:
+                bullets = pygame.image.load('img/3 ammo.png')
+            if len(ammo_list) == 4:
+                bullets = pygame.image.load('img/2 ammo.png')
+            if len(ammo_list) == 5:
+                bullets = pygame.image.load('img/1 ammo.png')
             if len(ammo_list) == 6:
-                reload = 'Reload!' # TODO show reload when out bullets
-            else:
-                text = str(magazine_limit)+'x'
-        if magazine_limit == 0:
-            text = ''
-            if len(ammo_list) == 6:
-                bullets = pygame.image.load('img/out of ammo.png')
-        for bullet in bullet_list:
-            # See if it hit a block
-            block_hit_list = pygame.sprite.spritecollide(bullet, levels.Level.enemy_list, True)
-            pengu_hit_list = pygame.sprite.spritecollide(bullet, levels.Level.pengu_list, True)
-            # For each block hit, remove the bullet and add to the score
-            for block in block_hit_list:
-                bullet_list.remove(bullet)
-                active_sprite_list.remove(bullet)
-                # constants.score_up.play()
-                constants.score += 1
-            for block in pengu_hit_list:
-                bullet_list.remove(bullet)
-                active_sprite_list.remove(bullet)
-                # constants.score_up.play()
-                constants.score -= 100
+                bullets = pygame.image.load('img/reload.png')
+
+            if magazine_limit > 0:
+                if len(ammo_list) == 6:
+                    reload = 'Reload!' # TODO show reload when out bullets
+                else:
+                    text = str(magazine_limit)+'x'
+            if magazine_limit == 0:
+                text = ''
+                if len(ammo_list) == 6:
+                    bullets = pygame.image.load('img/out of ammo.png')
+            for bullet in bullet_list:
+                # See if it hit a block
+                block_hit_list = pygame.sprite.spritecollide(bullet, levels.Level.enemy_list, True)
+                pengu_hit_list = pygame.sprite.spritecollide(bullet, levels.Level.pengu_list, True)
+                # For each block hit, remove the bullet and add to the score
+                for block in block_hit_list:
+                    bullet_list.remove(bullet)
+                    active_sprite_list.remove(bullet)
+                    # constants.score_up.play()
+                    constants.score += 1
+                for block in pengu_hit_list:
+                    bullet_list.remove(bullet)
+                    active_sprite_list.remove(bullet)
+                    # constants.score_up.play()
+                    constants.score -= 100
 
 
 
-        # ALL CODE TO DRAW SHOULD GO BELOW THIS COMMENT
-        current_level.draw(screen)
-        active_sprite_list.draw(screen)
-        # draw_text(screen, 'Magazines: ', 18, constants.SCREEN_WIDTH - 760, 5)
-        # draw_text(screen, reload, 18, 50, 10)
-        draw_text(screen,text, 18, 20, 10)
-        draw_text(screen,'Score: '+str(constants.score),18, 400, 10)
-        draw_text(screen, constants.version, 10, 60, 585) # TODO remove before release
-        screen.blit(bullets, (40, 5))
-        screen.blit(img, (670, 5))
+            # ALL CODE TO DRAW SHOULD GO BELOW THIS COMMENT
+            current_level.draw(screen)
+            active_sprite_list.draw(screen)
+            # draw_text(screen, 'Magazines: ', 18, constants.SCREEN_WIDTH - 760, 5)
+            # draw_text(screen, reload, 18, 50, 10)
+            draw_text(screen,text, 18, 20, 10)
+            draw_text(screen,'Score: '+str(constants.score),18, 400, 10)
+            draw_text(screen, constants.version, 10, 60, 585) # TODO remove before release
+            screen.blit(bullets, (40, 5))
+            screen.blit(img, (670, 5))
 
-        # ALL CODE TO DRAW SHOULD GO ABOVE THIS COMMENT
-        # Limit to 60 frames per second
-        clock.tick(60)
+            # ALL CODE TO DRAW SHOULD GO ABOVE THIS COMMENT
+            # Limit to 60 frames per second
+            clock.tick(60)
 
-        # Go ahead and update the screen with what we've drawn.
-        pygame.display.flip()
+            # Go ahead and update the screen with what we've drawn.
+            pygame.display.flip()
 
-    # Be IDLE friendly. If you forget this line, the program will 'hang'
-    # on exit.
-    pygame.quit()
+        # Be IDLE friendly. If you forget this line, the program will 'hang'
+        # on exit.
+        pygame.quit()
+        # heat_map.generate_pic()
+
 
 
 # if __name__ == "__main__":

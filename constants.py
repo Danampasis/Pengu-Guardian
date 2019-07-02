@@ -59,7 +59,7 @@ elif character_color == 'Blue':
 
 health = 900
 
-version = 'ALPHA_v0.1'
+version = 'ALPHA_v3'
 
 #Player Score
 

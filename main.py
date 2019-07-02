@@ -14,7 +14,6 @@ import csv
 # import heat_map
 
 
-# font_name = pygame.font.match_font('arial')
 font_name = 'Wonder_Boy_In_Monster_World.ttf'
 
 
@@ -54,7 +53,7 @@ def game():
 
     # Create all the levels
     level_list = []
-    # level_list.append(levels.Level_TEST(player))    #TODO Implement better level creation method(json/csv)
+    # level_list.append(levels.Level_TEST(player))    #TODO Implement better level creation method(json instead of list)
     level_list.append(levels.Level_01(player))
     level_list.append(levels.Level_02(player))
     level_list.append(levels.Level_03(player))
@@ -77,12 +76,6 @@ def game():
     ammo_list = pygame.sprite.Group()
 
     magazine_limit = 5
-
-    animation_list = pygame.sprite.Group()
-
-    # score = 0
-
-    # font = pygame.font.Font('Wonder_Boy_In_Monster_World.ttf',30)
 
     if current_level.music_on == True:
         pygame.mixer.music.load(current_level.music)
@@ -145,6 +138,8 @@ def game():
                         player.go_left()
                 if event.type == pygame.KEYDOWN:
                     keymod = pygame.key.get_mods()
+                    print(event.key)
+                    # writes users action and coordinates of each one to a csv file
                     user_actions_writer = csv.writer(user_actions, delimiter=',', quotechar='"',
                                                      quoting=csv.QUOTE_MINIMAL)
                     user_actions_writer.writerow([event.key, current_position, player.rect.y])
@@ -211,7 +206,6 @@ def game():
                             numTimesToRepeat -= 1  # repeat one less time because we just did it
                             if numTimesToRepeat == 0:  # do we repeat again?
                                 break
-                            # time.sleep(60.0 - ((time.time() - starttime) % 60.0))
 
                 if event.type == pygame.KEYUP:
                     if event.key == pygame.K_LEFT or event.key == pygame.K_a and player.change_x < 0:
@@ -235,7 +229,7 @@ def game():
                 player.rect.x = 500
                 current_level.shift_world(-diff)
 
-            # If the player gets near the left side, shift the world right (+x)
+            # If the player gets near the left side, shift the world right (+x) and play warning sound
             current_position = player.rect.x + abs(current_level.world_shift)
             if player.rect.x <= 120:
                 diff = 120 - player.rect.x
@@ -312,7 +306,7 @@ def game():
                 if len(ammo_list) == 6:
                     bullets = pygame.image.load('img/out of ammo.png')
             for bullet in bullet_list:
-                # See if it hit a block
+                # See if the bullet hit a block
                 block_hit_list = pygame.sprite.spritecollide(bullet, levels.Level.enemy_list, True)
                 pengu_hit_list = pygame.sprite.spritecollide(bullet, levels.Level.pengu_list, True)
                 # For each block hit, remove the bullet and add to the score

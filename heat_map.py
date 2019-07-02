@@ -9,6 +9,8 @@ with open('user_actions.csv') as csv_file:
     # line_count = 0
     source_img = Image.open('img/level_test_bg.png')
     for row in csv_reader:
+        if len(row) < 1:
+            continue
         if int(row[0]) == 32:
             draw = ImageDraw.Draw(source_img)
             draw.rectangle(((int(row[1]), int(row[2])), (int(row[1])+80, int(row[2])+80)), fill="red")

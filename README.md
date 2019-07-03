@@ -14,7 +14,7 @@ pip install --user --requirement requirements.txt
 * Boss fights (coming soon)
 * Currency - Economy System (coming soon)
 * Cosmetic items (coming soon)
-* Multiplayer Mode (coming soon)
+* ~~Multiplayer Mode~~
 
 **Current State**
 
